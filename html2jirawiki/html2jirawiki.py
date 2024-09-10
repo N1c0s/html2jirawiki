@@ -229,8 +229,10 @@ class MarkdownConverter(object):
         src = el.attrs.get('src', None) or ''
         title = el.attrs.get('title', None) or ''
         title_part = ' "%s"' % title.replace('"', r'\"') if title else ''
-        return '![%s](%s%s)' % (alt, src, title_part)
-
+        if src:
+            return '!%s!' % src
+        elif alt:
+            return '!%s!' % alt
 
 def html_to_jira_wiki(html_string, **options):
     return MarkdownConverter(**options).convert(html_string)
